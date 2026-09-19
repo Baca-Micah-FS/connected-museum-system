@@ -1,0 +1,12 @@
+{
+  "name": "connected-museum-system",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "server": "npm --prefix server run dev",
+    "mobile": "npm --prefix mobile-controller start",
+    "tablet": "npm --prefix tablet-display start",
+    "web": "npm --prefix web-admin run dev",
+    "check": "npm --prefix server run check && npm --prefix mobile-controller run check && npm --prefix tablet-display run check && npm --prefix web-admin run build"
+  }
+}

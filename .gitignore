@@ -1,0 +1,14 @@
+**/node_modules/
+**/.expo/
+**/dist/
+**/*.tsbuildinfo
+**/.env
+**/.env.*
+!**/.env.example
+.DS_Store
+.vscode/
+.idea/
+**/.claude/
+**/AGENTS.md
+**/CLAUDE.md
+**/*.log
