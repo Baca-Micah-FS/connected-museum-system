@@ -1,8 +1,8 @@
 # Nexus Museum Connected Exhibit
 
-Nexus Museum is a multi-device interactive exhibit prototype. It gives visitors a phone controller, provides museum staff and nearby guests with a live tablet display, and gives curators a browser-based administration dashboard. A TypeScript Socket.IO server coordinates all three interfaces as one synchronized system.
+Nexus Museum is an interactive museum exhibit that works across a phone, tablet, and web browser. Visitors use the phone to explore artifacts, the tablet shows what is happening at the exhibit, and museum staff use the website to manage everything. A Socket.IO server keeps the three screens updated in real time.
 
-This project was created for the Multi-Device Connected Prototype System assignment. Its purpose is to explore how interfaces with different responsibilities can cooperate around one authoritative source of state.
+I built this project for the Multi-Device Connected Prototype System assignment. I wanted each screen to have its own purpose while still feeling like one exhibit instead of three separate apps.
 
 ## The experience
 
@@ -15,22 +15,11 @@ The system is intended for a small museum or traveling exhibit:
 
 The main design idea is that the three clients are not copies of the same application. Each has a specific job while contributing to one connected visitor experience.
 
-## Architecture
+## How it works
 
-```text
-Mobile Visitor Controller
-          │
-          │ artifact:selected / artifact:rotate / visitor:entered
-          ▼
-  TypeScript Socket.IO Server
-          │
-          │ validates input, updates authoritative state
-          │ state:sync / state:updated
-          ▼
-Tablet Exhibit Monitor  ◀────▶  Web Curator Admin
-```
+The phone and web dashboard send actions to the server. The server checks those actions, updates the exhibit, and sends the new information to every connected screen. For example, selecting an artifact on the phone immediately changes the tablet display and the system overview on the website.
 
-When a client connects, the server immediately sends the current state. This allows a restarted or temporarily disconnected interface to recover without resetting the exhibit.
+When an interface reconnects, the server sends it the latest exhibit information. A device can therefore reconnect without resetting everyone else's session.
 
 ## Interface responsibilities
 
@@ -69,20 +58,13 @@ When a client connects, the server immediately sends the current state. This all
 - Socket.IO and Socket.IO Client
 - React Native Safe Area Context
 
-## Project structure
+## Project folders
 
-```text
-connected-museum-system/
-├── mobile-controller/   # Expo visitor interaction app
-├── tablet-display/      # Expo exhibit dashboard
-├── web-admin/           # Vite curator interface
-├── server/              # Express and Socket.IO coordination server
-├── shared-types/        # Shared TypeScript state and event payloads
-├── TESTING.md            # Automated and manual test documentation
-└── README.md
-```
+The project is split into five main folders. `mobile-controller` and `tablet-display` contain the two Expo apps. `web-admin` contains the browser interface, while `server` runs the shared Socket.IO connection. I also created `shared-types` so all four applications use the same definitions for exhibit data.
 
-## Shared state
+Testing notes and the manual test checklist are available in [TESTING.md](TESTING.md).
+
+## Information shared between devices
 
 The central state includes:
 
@@ -94,21 +76,11 @@ The central state includes:
 - Connected clients by interface type
 - Latest accepted action and update timestamp
 
-## Socket.IO events
+## Real-time communication
 
-| Event | Direction | Purpose |
-|---|---|---|
-| `client:register` | Client to server | Registers mobile, tablet, or web client type |
-| `state:sync` | Server to client | Sends authoritative state after connection |
-| `state:updated` | Server to clients | Broadcasts each accepted state change |
-| `artifact:selected` | Mobile to server | Selects an available artifact |
-| `artifact:rotate` | Mobile to server | Updates rotation in interactive mode |
-| `visitor:entered` | Mobile to server | Records a new visitor session |
-| `artifact:enabled` | Web to server | Changes curator-controlled availability |
-| `exhibit:mode` | Web to server | Changes the operating mode |
-| `exhibit:reset` | Web to server | Resets session statistics and presentation state |
+The apps communicate through a small set of Socket.IO events. The phone sends changes when a visitor selects or rotates an artifact or begins a new session. The web dashboard sends curator changes, such as changing the exhibit mode or making an artifact unavailable. After the server checks an action, it updates the shared state and sends the result to every connected screen.
 
-Critical commands use Socket.IO acknowledgments. The server returns either success or a user-readable validation message.
+The server also sends the full current state whenever a device connects again. This keeps the phone, tablet, and web dashboard matched even if one of them was temporarily closed or disconnected.
 
 ## Prerequisites
 
@@ -120,23 +92,18 @@ Critical commands use Socket.IO acknowledgments. The server returns either succe
 
 ## Installation
 
-Clone the repository, then install dependencies in each project:
+Download or clone the project from [GitHub](https://github.com/Baca-Micah-FS/connected-museum-system), open the project folder in VS Code, and run the following commands from its main terminal:
 
 ```bash
-git clone YOUR_PRIVATE_REPOSITORY_URL
-cd connected-museum-system
-
-cd shared-types
 npm install
-cd ../server
-npm install
-cd ../mobile-controller
-npm install
-cd ../tablet-display
-npm install
-cd ../web-admin
-npm install
+npm install --prefix shared-types
+npm install --prefix server
+npm install --prefix mobile-controller
+npm install --prefix tablet-display
+npm install --prefix web-admin
 ```
+
+The first command installs the root scripts. The remaining commands install what each part of the system needs.
 
 ## Network configuration
 
@@ -199,7 +166,7 @@ npm run check
 
 The manual end-to-end workflow is documented in [TESTING.md](TESTING.md).
 
-## Error handling and recovery
+## Connection and error handling
 
 - Clients automatically attempt to reconnect after a connection loss.
 - The server sends current state to newly connected clients.
@@ -216,16 +183,15 @@ YouTube unlisted link: **Add final video link before submission.**
 
 The final video should show all three interfaces, a complete mobile-to-server-to-tablet/web interaction, an administrative web action affecting the visitor interfaces, and a short architecture explanation.
 
-## Future improvements
+## Ideas I would like to add later
 
-- Add illustrated or 3D artifact assets
-- Store exhibit analytics in a database
-- Add curator authentication and roles
-- Add multiple rooms and tablet stations
-- Create historical activity charts from real data
-- Add accessibility settings and localization
-- Deploy the server and web dashboard for remote demonstrations
-- Add automated Socket.IO integration tests to the repository
+- Illustrated or 3D artifact models
+- A database for long-term visitor statistics
+- Staff accounts for the curator dashboard
+- Support for multiple museum rooms
+- Charts showing exhibit activity over time
+- More accessibility and language options
+- An online deployment for remote demonstrations
 
 ## Current status
 
