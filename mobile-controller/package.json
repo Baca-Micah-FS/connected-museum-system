@@ -4,9 +4,13 @@
   "main": "index.ts",
   "dependencies": {
     "expo": "~57.0.24",
+    "expo-haptics": "~57.0.3",
     "expo-status-bar": "~57.0.1",
+    "museum-shared-types": "file:../shared-types",
     "react": "19.2.3",
-    "react-native": "0.86.3"
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
@@ -16,7 +20,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "check": "tsc --noEmit"
   },
   "private": true
 }
