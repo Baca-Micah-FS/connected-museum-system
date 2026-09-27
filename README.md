@@ -95,7 +95,6 @@ The server also sends the full current state whenever a device connects again. T
 Download or clone the project from [GitHub](https://github.com/Baca-Micah-FS/connected-museum-system), open the project folder in VS Code, and run the following commands from its main terminal:
 
 ```bash
-npm install
 npm install --prefix shared-types
 npm install --prefix server
 npm install --prefix mobile-controller
@@ -103,7 +102,7 @@ npm install --prefix tablet-display
 npm install --prefix web-admin
 ```
 
-The first command installs the root scripts. The remaining commands install what each part of the system needs.
+Each command installs what that part of the system needs. The scripts in the root `package.json` can then be used to start each interface.
 
 ## Network configuration
 
@@ -195,4 +194,4 @@ The final video should show all three interfaces, a complete mobile-to-server-to
 
 ## Current status
 
-The complete prototype has been compiled and tested with an iPhone Simulator, iPad Simulator, desktop browser, and local Socket.IO integration script. Android and physical-device testing remain manual verification items before final submission.
+The complete prototype has been compiled and tested with an iPhone Simulator, iPad Simulator, desktop browser, and local Socket.IO integration script. A clean copy made from the Git repository was also installed and built successfully. Android and physical-device testing remain optional manual verification items.
