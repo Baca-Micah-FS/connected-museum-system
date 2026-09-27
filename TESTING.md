@@ -71,4 +71,8 @@ The local integration test verified:
 - Physical-device haptic feedback
 - Android mobile and tablet runtime
 - Full disconnect/reconnect demonstration
-- Final 3–5 minute video
+
+## Submission video
+
+- Final multi-device demonstration recorded as `Connected_Devices_Prototype.mp4`
+- Video will be uploaded separately through the course assignment page

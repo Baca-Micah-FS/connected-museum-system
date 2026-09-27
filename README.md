@@ -178,9 +178,7 @@ The manual end-to-end workflow is documented in [TESTING.md](TESTING.md).
 
 ## Demo video
 
-YouTube unlisted link: **Add final video link before submission.**
-
-The final video should show all three interfaces, a complete mobile-to-server-to-tablet/web interaction, an administrative web action affecting the visitor interfaces, and a short architecture explanation.
+The demonstration video is submitted separately through the course assignment page. It shows all three interfaces, mobile interactions updating the tablet and web dashboard, curator controls affecting the other devices, and a short explanation of the project structure.
 
 ## Ideas I would like to add later
 
